@@ -2,7 +2,7 @@ import path from 'path';
 import { readFileSync } from "fs"
 import { ethers } from 'ethers';
 
-const contractAddress = '0x63eb9d77D083cA10C304E28d5191321977fd0Bfb';
+const contractAddress = readFileSync(path.join(__dirname, '../collection_address.txt'), 'utf-8').trim();
 
 let walletTypePath = ""
 const args = process.argv.slice(2);
@@ -19,7 +19,13 @@ if (args.includes('--og')) {
 const walletAdressList = readFileSync(walletTypePath, 'utf-8')
   .split('\n')
   .map(addr => addr.trim())
-  .filter(addr => ethers.isAddress(addr));
+  .filter((addr, index) => {
+    if (!ethers.isAddress(addr)) {
+      console.warn(`Invalid address found at line ${index + 1} in wallet list: ${addr}`);
+      return false; // Exclude invalid addresses
+    }
+    return true; // Include valid addresses
+  });
 
 
 const provider = new ethers.JsonRpcProvider('https://rpc.hyperliquid.xyz/evm');
@@ -33,11 +39,18 @@ const ERC721_ABI = [
 (async () => {
   const contract = new ethers.Contract(contractAddress, ERC721_ABI, provider);
 
+  //set a success count to track successful balance fetches
+  let successCount = 0;
+
+  // Iterate through each wallet address and fetch the balance
   for (let i = 0; i < walletAdressList.length; i++) {
     const walletAddress = walletAdressList[i];
     try {
       const balance = await contract.balanceOf(walletAddress);
-      console.log(`WALLET #${i + 1} ${walletAddress}: ${balance.toString()}`);
+      console.log(`WALLET #${i + 1} ${walletAddress} \t BALANCE: ${balance.toString()}`);
+      if (balance > 0) {
+        successCount++;
+      }
       //await new Promise(resolve => setTimeout(resolve, 1000)); // Rate limiting
 
     } catch (error: any) {
@@ -45,4 +58,6 @@ const ERC721_ABI = [
       continue;
     }
   }
+
+  console.log(`\nSUCCESS BALANCES ${successCount}/${walletAdressList.length}`);
 })()
