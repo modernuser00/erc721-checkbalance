@@ -16,7 +16,10 @@ if (args.includes('--og')) {
 }
 
 // load wallets
-const walletAdressList = readFileSync(walletTypePath, 'utf-8').split('\n');
+const walletAdressList = readFileSync(walletTypePath, 'utf-8')
+  .split('\n')
+  .map(addr => addr.trim())
+  .filter(addr => ethers.isAddress(addr));
 
 
 const provider = new ethers.JsonRpcProvider('https://rpc.hyperliquid.xyz/evm');
