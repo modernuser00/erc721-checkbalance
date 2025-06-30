@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "og": "npx ts-node ./src/index.ts --og",
-    "wl": "npx ts-node ./src/index.ts --wl"
+    "balances": "npx ts-node ./src/balances.ts",
+    "transfer": "npx ts-node ./src/transfer.ts",
+    "holders": "npx ts-node ./src/holders.ts"
   },
   "keywords": [],
   "author": "",

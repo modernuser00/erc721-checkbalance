@@ -1,0 +1,14 @@
+{
+  "rpc": [
+    "https://rpc.hyperliquid.xyz/evm",
+    "https://rpc.hyperlend.finance",
+    "https://rpc.hypurrscan.io",
+    "https://hyperliquid-json-rpc.stakely.io",
+    "https://hyperliquid.drpc.org"
+  ],
+  "collectionAddress": "0xb88F385C2ea6d9F80f36f1E42dEBd4c381F2CfF3",
+  "collectionStartTokenId": 0,
+  "collectionEndTokenId": 1499,
+  "batchSize": 10,
+  "recipientAddress": ""
+}
