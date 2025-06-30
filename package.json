@@ -1,11 +1,12 @@
 {
-  "name": "verify-nfts",
+  "name": "erc721-tools",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "balances": "npx ts-node ./src/balances.ts",
+    "holders": "npx ts-node ./src/holders.ts",
     "transfer": "npx ts-node ./src/transfer.ts",
-    "holders": "npx ts-node ./src/holders.ts"
+    "transfer-update": "npx ts-node ./src/transfer.ts --update"
   },
   "keywords": [],
   "author": "",

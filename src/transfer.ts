@@ -19,7 +19,9 @@ const ERC721_ABI = [
 
 (async () => {
   // get collectons owners
-  await fetchERC721CollectionHolders();
+  if (process.argv.includes('--update')) {
+    await fetchERC721CollectionHolders();
+  }
   const contract = new ethers.Contract(contractAddress, ERC721_ABI, provider);
 
   //set a success count to track successful balance fetches
