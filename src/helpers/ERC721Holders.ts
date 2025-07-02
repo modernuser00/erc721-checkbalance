@@ -10,9 +10,9 @@ const ERC721_ABI = [
   'function ownerOf(uint256) view returns (address)'
 
 ];
-const START_TOKEN_ID = config.collectionStartTokenId || 0
-const END_TOKEN_ID = config.collectionEndTokenId || 100;
-const BATCH_SIZE = config.batchSize || 2;
+const START_TOKEN_ID = config.erc721.collectionStartTokenId || 0
+const END_TOKEN_ID = config.erc721.collectionEndTokenId || 100;
+const BATCH_SIZE = config.erc721.batchSize || 2;
 
 export const fetchERC721CollectionHolders = async () => {
   console.log(`Fetching ERC721 collection holders from token ID ${START_TOKEN_ID} to ${END_TOKEN_ID} in batches of ${BATCH_SIZE}...`);

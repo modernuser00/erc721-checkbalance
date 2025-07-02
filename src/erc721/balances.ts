@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
-import { getPublicKeysFromLocalFile } from './helpers';
-import { COLLECTION_ADDRESS, PUBLIC_KEYS_PATH, RPC } from './helpers/constants';
+import { getPublicKeysFromLocalFile } from '../helpers';
+import { COLLECTION_ADDRESS, PUBLIC_KEYS_PATH, RPC } from '../helpers/constants';
 
 // Load wallet addresses from the public keys file
 const walletAdressList = getPublicKeysFromLocalFile(PUBLIC_KEYS_PATH)

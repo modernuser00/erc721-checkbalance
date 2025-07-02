@@ -34,3 +34,5 @@ jspm_packages/
 Thumbs.db
 src/test/
 wallets/pk.txt
+data/
+private/

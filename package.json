@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "balances": "npx ts-node ./src/balances.ts",
-    "holders": "npx ts-node ./src/holders.ts",
-    "transfer": "npx ts-node ./src/transfer.ts",
-    "transfer-update": "npx ts-node ./src/transfer.ts --update"
+    "erc721-balances": "npx ts-node ./src/erc721/balances.ts",
+    "erc721-holders": "npx ts-node ./src/erc721/holders.ts",
+    "erc721-transfer": "npx ts-node ./src/erc721/transfer.ts",
+    "erc721-transfer-update": "npx ts-node ./src/erc721/transfer.ts --update",
+    "erc20-balances": "npx ts-node ./src/erc20/balances.ts",
+    "erc20-transfer": "npx ts-node ./src/erc20/transfer.ts"
   },
   "keywords": [],
   "author": "",

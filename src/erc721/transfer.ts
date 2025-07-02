@@ -1,8 +1,8 @@
 
 import { ethers } from 'ethers';
-import { getPrivateKeysFromLocalFile } from './helpers';
-import { COLLECTION_ADDRESS, PRIVATE_KEYS_PATH, RECIPIENT_ADDRESS, RPC } from './helpers/constants';
-import { fetchERC721CollectionHolders, getTokenIdsByOwner } from './helpers/ERC721Holders';
+import { getPrivateKeysFromLocalFile } from '../helpers';
+import { COLLECTION_ADDRESS, PRIVATE_KEYS_PATH, RECIPIENT_ADDRESS, RPC } from '../helpers/constants';
+import { fetchERC721CollectionHolders, getTokenIdsByOwner } from '../helpers/ERC721Holders';
 
 // config
 const contractAddress = COLLECTION_ADDRESS

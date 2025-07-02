@@ -1,4 +1,4 @@
-import { fetchERC721CollectionHolders } from "./helpers/ERC721Holders"
+import { fetchERC721CollectionHolders } from "../helpers/ERC721Holders"
 
 (async function main() {
   try {
