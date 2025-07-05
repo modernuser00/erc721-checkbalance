@@ -17,32 +17,36 @@ const BATCH_SIZE = config.erc721.batchSize || 2;
 export const fetchERC721CollectionHolders = async () => {
   console.log(`Fetching ERC721 collection holders from token ID ${START_TOKEN_ID} to ${END_TOKEN_ID} in batches of ${BATCH_SIZE}...`);
   const contracts = providers.map(provider => new ethers.Contract(COLLECTION_ADDRESS, ERC721_ABI, provider));
-  let successCount = 0;
   const owners: { tokenId: number; owner: string }[] = [];
+  let providerIndex = 0;
 
+  // Loop through the token IDs in batches
   for (let tokenId = START_TOKEN_ID; tokenId <= END_TOKEN_ID; tokenId += BATCH_SIZE) {
     const batchPromises = [];
+    // Cycle through providers to distribute the load
+    const contractIndex = providerIndex % contracts.length
+    const contract = contracts[contractIndex]
+    providerIndex++;
+
+    // Create promises for each token ID in the current batch
     for (let i = 0; i < BATCH_SIZE && (tokenId + i) <= END_TOKEN_ID; i++) {
       const currentTokenId = tokenId + i;
       batchPromises.push(
-        contracts[0].ownerOf(currentTokenId)
+        contract.ownerOf(currentTokenId)
           .then(owner => ({ tokenId: currentTokenId, owner }))
           .catch(error => {
-            console.error(`Error fetching owner for token ID ${currentTokenId}:`, error.message);
+            console.error(`Error in TOKEN #${currentTokenId} with RPC: [${RPC_LIST[contractIndex]}]:`, error.message);
             return { tokenId: currentTokenId, owner: "null" };
           })
       );
     }
-
+    // Wait for all promises in the batch to resolve
     const batchResults = await Promise.all(batchPromises);
     for (const result of batchResults) {
       owners.push(result);
-      if (result.owner !== ethers.ZeroAddress && result.owner !== "null") {
-        successCount++;
-      }
     }
   }
-
+  // Save the owners to a file
   fs.writeFileSync(OWNERS_PATH, JSON.stringify(owners, null, 2), 'utf-8');
   console.log(`Saved owners to ${OWNERS_PATH}`);
 }
