@@ -16,10 +16,12 @@ const ERC721_ABI = [
   'function ownerOf(uint256 tokenId) view returns (address)',
 ];
 
+const update = process.argv.includes('--update');
+const fastTransfer = process.argv.includes('--fast-transfer');
 
 (async () => {
   // get collectons owners
-  if (process.argv.includes('--update')) {
+  if (update) {
     await fetchERC721CollectionHolders();
   }
   const contract = new ethers.Contract(contractAddress, ERC721_ABI, provider);
@@ -51,7 +53,7 @@ const ERC721_ABI = [
           try {
             const tx = await (contractWithSigner as any).safeTransferFrom(walletAddress, RECIPIENT_ADDRESS, tokenId);
             console.log(`✅Transferred token ${tokenId} from ${walletAddress} to ${RECIPIENT_ADDRESS}.\nTx: https://hyperscan.com/tx/${tx.hash}`);
-            await tx.wait();
+            !fastTransfer ? await tx.wait() : null;
           } catch (transferError: any) {
             console.error(`❌Error transferring token ${tokenId} from ${walletAddress}:`, transferError.message);
           }
